@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"errors"
-	"fmt"
 	"learn-golang-restful-api/helper"
 	"learn-golang-restful-api/model/domain"
 )
@@ -54,12 +53,10 @@ func (repository *CategoryRepositoryImpl) FindById(ctx context.Context, tx *sql.
 
 	category := domain.Category{}
 	if rows.Next() {
-		fmt.Println("CategoryRepository: Return Category Found")
 		err := rows.Scan(&category.Id, &category.Name)
 		helper.PanicIfError(err)
 		return category, nil
 	} else {
-		fmt.Println("CategoryRepository: Return Category Not Found")
 		return category, errors.New("category is not found")
 	}
 }

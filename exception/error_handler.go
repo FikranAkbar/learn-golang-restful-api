@@ -9,7 +9,7 @@ import (
 
 func ErrorHandler(writer http.ResponseWriter, request *http.Request, err any) {
 
-	fmt.Println("Error Handler Called")
+	fmt.Println("Error Handler Called:", err)
 
 	if notFoundError(writer, request, err) {
 		return
@@ -39,7 +39,6 @@ func notFoundError(writer http.ResponseWriter, request *http.Request, err any) b
 }
 
 func internalServerError(writer http.ResponseWriter, request *http.Request, err any) {
-	fmt.Println("Internal Server Error Called")
 	writer.Header().Set("Content-Type", "application/json")
 	writer.WriteHeader(http.StatusInternalServerError)
 

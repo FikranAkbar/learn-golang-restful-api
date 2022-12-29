@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"github.com/julienschmidt/httprouter"
 	"learn-golang-restful-api/helper"
 	"learn-golang-restful-api/model/web"
@@ -63,6 +62,10 @@ func (controller *CategoryControllerImpl) Delete(writer http.ResponseWriter, req
 	webResponse := web.WebResponse{
 		Code:   200,
 		Status: "OK",
+		Data: web.CategoryResponse{
+			Id:   191,
+			Name: "ERROR GA TAU",
+		},
 	}
 
 	helper.WriteToResponseBody(writer, webResponse)
@@ -73,9 +76,7 @@ func (controller *CategoryControllerImpl) FindById(writer http.ResponseWriter, r
 	id, err := strconv.Atoi(categoryId)
 	helper.PanicIfError(err)
 
-	fmt.Println("Before API FindById Called")
 	categoryResponse := controller.CategoryService.FindById(request.Context(), id)
-	fmt.Println("After API FindById Called")
 	webResponse := web.WebResponse{
 		Code:   200,
 		Status: "OK",

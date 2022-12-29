@@ -3,7 +3,6 @@ package service
 import (
 	"context"
 	"database/sql"
-	"fmt"
 	"github.com/go-playground/validator/v10"
 	"learn-golang-restful-api/exception"
 	"learn-golang-restful-api/helper"
@@ -53,7 +52,6 @@ func (service *CategoryServiceImpl) Update(ctx context.Context, request web.Cate
 
 	category, err := service.CategoryRepository.FindById(ctx, tx, request.Id)
 	if err != nil {
-		fmt.Println("CategoryService: Category Not Found On Update", err)
 		panic(exception.NewNotFoundError(err.Error()))
 	}
 
@@ -71,7 +69,7 @@ func (service *CategoryServiceImpl) Delete(ctx context.Context, categoryId int) 
 
 	category, err := service.CategoryRepository.FindById(ctx, tx, categoryId)
 	if err != nil {
-		panic(exception.NewNotFoundError(err.Error()))
+		panic(exception.NotFoundError{Error: err.Error()})
 	}
 
 	service.CategoryRepository.Delete(ctx, tx, category)
@@ -79,18 +77,14 @@ func (service *CategoryServiceImpl) Delete(ctx context.Context, categoryId int) 
 
 func (service *CategoryServiceImpl) FindById(ctx context.Context, categoryId int) web.CategoryResponse {
 	tx, err := service.DB.Begin()
-	fmt.Println("ERROR1:", err)
 	helper.PanicIfError(err)
 	defer helper.CommitOrRollback(tx)
 
 	category, err := service.CategoryRepository.FindById(ctx, tx, categoryId)
 	if err != nil {
-		fmt.Println("ERROR2:", err)
-		fmt.Println("CategoryService: Category Not Found")
 		panic(exception.NewNotFoundError(err.Error()))
 	}
 
-	fmt.Println("Trying to return category response")
 	return helper.ToCategoryResponse(category)
 }
 
