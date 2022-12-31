@@ -26,5 +26,6 @@
         </set>
       </option>
     </inspection_tool>
+    <inspection_tool class="SqlResolveInspection" enabled="true" level="INFORMATION" enabled_by_default="true" />
   </profile>
 </component>

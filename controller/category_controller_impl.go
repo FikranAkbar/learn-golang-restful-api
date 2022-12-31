@@ -62,10 +62,6 @@ func (controller *CategoryControllerImpl) Delete(writer http.ResponseWriter, req
 	webResponse := web.WebResponse{
 		Code:   200,
 		Status: "OK",
-		Data: web.CategoryResponse{
-			Id:   191,
-			Name: "ERROR GA TAU",
-		},
 	}
 
 	helper.WriteToResponseBody(writer, webResponse)
